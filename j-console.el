@@ -1,5 +1,5 @@
 
-;;; j-mode.el --- Major mode for editing J programs
+;;; j-mode.el --- Major mode for editing J programs  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2012 Zachary Elliott
 ;;
@@ -123,14 +123,13 @@ the containing buffer"
 (defun j-console-execute-region ( start end )
   "Sends current region to the j-console-cmd session and exectues it"
   (interactive "r")
-  (when (= start end)
-    (error "Region is empty"))
   (let ((region (buffer-substring-no-properties start end))
         (session (j-console-ensure-session)))
     (pop-to-buffer (process-buffer session))
     (goto-char (point-max))
-    (insert (format "\n%s\n" region))
-    (comint-send-input)))
+    (insert region)
+    (comint-send-input)
+    (other-window 1)))
 
 (defun j-console-execute-line ()
   "Sends current line to the j-console-cmd session and exectues it"
