@@ -52,6 +52,8 @@
 (require 'j-font-lock)
 (require 'j-console)
 (require 'j-help)
+(require 'jacket)
+(require 'NuVoc)
 
 
 (defconst j-mode-version "1.1.1"
