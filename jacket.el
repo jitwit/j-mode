@@ -38,7 +38,9 @@
   "Present a popup with links to information about thing"
   (interactive "sJOOGLE: ")
   (let ((urls (seq-map #'(lambda (url)
-                           (popup-make-item (seq-elt url 0) :value (seq-elt url 1)))
+                           (popup-make-item (seq-elt url 0)
+					    :value
+					    (seq-elt url 1)))
                        (j-urls thing))))
     (when urls
       (browse-url (popup-menu* urls)))))
