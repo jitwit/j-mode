@@ -4,6 +4,9 @@
          sxml/sxpath
          sxml)
 
+;; to protect against suspect changes such as the most recent (07-08-20)
+(define save-NuVoc-url
+  "https://web.archive.org/web/20200524060459/https://code.jsoftware.com/wiki/NuVoc")
 (define jsoftware.com "https://code.jsoftware.com")
 (define NuVoc.html "NuVoc.html")
 (define NuVoc.el "NuVoc.el")
