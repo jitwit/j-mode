@@ -45,6 +45,11 @@
     (when urls
       (browse-url (popup-menu* urls)))))
 
+(defun jdocs ()
+  "only works on my guix when j-docs-help addon is present"
+  (interactive)
+  (browse-url "~/.guix-profile/share/j/addons/docs/help/index.htm"))
+
 ; (defun jacket ()
 ;   "J minor mode to improve experience in emacs"
 ;   (interactive)

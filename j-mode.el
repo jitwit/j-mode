@@ -55,7 +55,6 @@
 (require 'jacket)
 (require 'NuVoc)
 
-
 (defconst j-mode-version "1.1.1"
   "`j-mode' version")
 
