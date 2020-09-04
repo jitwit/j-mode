@@ -76,6 +76,7 @@
     (define-key map (kbd "C-c C-l") 'j-console-execute-line)
     (define-key map (kbd "C-c h")   'j-help-lookup-symbol)
     (define-key map (kbd "C-c C-h") 'j-help-lookup-symbol-at-point)
+    (define-key map (kbd "M-p")     'pretty-J)
     map)
   "Keymap for J major mode")
 
@@ -112,7 +113,10 @@
          ;;(font-lock-mark-block-function . mark-defun)
          (font-lock-syntactic-face-function
           . j-font-lock-syntactic-face-function)))
+	  ;;   (set (make-local-variable 'prettify-symbols-alist) `(,@j->apl ,@prettify-symbols-alist))
   (run-mode-hooks 'j-mode-hook))
+
+
 
 
 ;;;###autoload

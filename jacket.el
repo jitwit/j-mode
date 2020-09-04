@@ -6,6 +6,7 @@
                   (insert-file-contents "data/j.sexp")
                   (buffer-string)))))
 
+(require 'pretty-mode)
 (require 'NuVoc)
 (require 'popup)
 (require 'browse-url)
@@ -59,5 +60,24 @@
 
 ;; ;;;###autoload
 ;; (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . jacket))
+
+(defvar j->apl
+  '(; ("/\\.~"    . ?⌸)
+    ("=\\."     . ?←)
+    ("=:"       . ?←)
+    ("~"        . ?⍨)
+    ("\*"       . ?×))
+  "Table to translate J to classic APL characters with pretty-symbols")
+
+(defun j-psa ()
+  (interactive)
+  (setq prettify-symbols-alist j->apl))
+
+(defun pretty-J ()
+  "Load `j->apl' table to set `prettify-symbols-alist' locally
+and activate `prettify-symbols-mode'."
+  (interactive)
+  (j-psa)
+  (prettify-symbols-mode))
 
 (provide 'jacket)
