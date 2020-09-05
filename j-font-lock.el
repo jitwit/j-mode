@@ -44,7 +44,6 @@
     (modify-syntax-entry ?\: "."   table)
     (modify-syntax-entry ?\( "()"  table)
     (modify-syntax-entry ?\) ")("  table)
-;;    (modify-syntax-entry ?\' "\""  table)
     (modify-syntax-entry ?\n ">"   table)
     (modify-syntax-entry ?\r ">"   table)
     table)
@@ -52,64 +51,46 @@
 
 (defvar j-font-lock-constants '())
 
-(defvar j-font-lock-control-structures
+(defvar j-controls
   '("assert."  "break."  "continue."  "while."  "whilst."  "for."  "do."  "end."
     "if."  "else."  "elseif."  "return."  "select."  "case."  "fcase."  "throw."
-    "try."  "catch."  "catchd."  "catcht."  "end."
+    "try."  "catch."  "catchd."  "catcht."  "end."))
     ;; "for_[a-zA-Z]+\\."  "goto_[a-zA-Z]+\\."  "label_[a-zA-Z]+\\."
-    ))
 
-(defvar j-font-lock-foreign-conjunctions
-  '("0!:" "1!:" "2!:" "3!:" "4!:" "5!:" "6!:" "7!:" "8!:" "9!:" "11!:" "13!:"
-    "15!:" "18!:" "128!:" ))
 
-(defvar j-font-lock-len-3-verbs
-  '("_9:" "p.." "{::"))
-(defvar j-font-lock-len-2-verbs
-  '("x:" "u:" "s:" "r." "q:" "p:" "p." "o." "L." "j." "I." "i:" "i." "E." "e."
-    "C." "A." "?." "\":" "\"." "}:" "}." "{:" "{." "[:" "/:" "\\:" "#:" "#." ";:" ",:"
-    ",." "|:" "|." "~:" "~." "$:" "$." "^." "%:" "%." "-:" "-." "*:" "*."  "+:"
-    "+." "_:" ">:" ">." "<:" "<."))
-(defvar j-font-lock-len-1-verbs
-  '("?" "{" "]" "[" ":" "!" "#" ";" "," "|" "$" "^" "%" "-" "*" "+" ">" "<" "="))
-(defvar j-font-lock-verbs
-  (append j-font-lock-len-3-verbs j-font-lock-len-2-verbs j-font-lock-len-1-verbs))
-
-(defvar j-font-lock-len-2-adverbs
-  '("t:" "t." "M." "f." "b." "/."))
-(defvar j-font-lock-len-1-adverbs
-  '("}" "." "\\" "/" "~"))
-(defvar j-font-lock-adverbs
-  (append j-font-lock-len-2-adverbs j-font-lock-len-1-adverbs))
-
-(defvar j-font-lock-len-3-others
-  '("NB."))
 (defvar j-font-lock-len-2-others
   '("=." "=:" "_." "a." "a:"))
 (defvar j-font-lock-len-1-others
   '("_" ))
-(defvar j-font-lock-others
-  (append j-font-lock-len-3-others j-font-lock-len-2-others j-font-lock-len-1-others))
 
-(defvar j-font-lock-len-3-conjunctions
+ ; todo: negative constants eg _3:
+(defvar j-verb-3
+  '("p.." "{::"))
+(defvar j-conj-3
   '("&.:"))
-(defvar j-font-lock-len-2-conjunctions
+(defvar j-verb-2
+  '("x:" "u:" "s:" "r." "q:" "p:" "p." "o." "L." "j." "I." "i:" "i." "E." "e."
+    "C." "A." "?." "\":" "\"." "}:" "}." "{:" "{." "[:" "/:" "\\:" "#:" "#." ";:" ",:"
+    ",." "|:" "|." "~:" "~." "$:" "$." "^." "%:" "%." "-:" "-." "*:" "*."  "+:"
+    "+." "_:" ">:" ">." "<:" "<."))
+(defvar j-adv-2
+  '("t:" "t." "M." "f." "b." "/."))
+(defvar j-conj-2
   '("T." "S:" "L:" "H." "D:" "D." "d." "&:" "&." "@:" "@." "`:" "!:" "!." ";."
     "::" ":." ".:" ".." "^:"))
-(defvar j-font-lock-len-1-conjunctions
+(defvar j-adv-1
+  '("}" "." "\\" "/" "~"))
+(defvar j-verb-1
+  '("?" "{" "]" "[" ":" "!" "#" ";" "," "|" "$" "^" "%" "-" "*" "+" ">" "<" "="))
+(defvar j-conj-1
   '("&" "@" "`" "\"" ":" "."))
-(defvar j-font-lock-conjunctions
-  (append j-font-lock-len-3-conjunctions
-          j-font-lock-len-2-conjunctions
-          j-font-lock-len-1-conjunctions))
 
+(setq j-comment-rx
+      (rx "NB." (* not-newline)))
 
-(defvar j-comment-rx
-  (rx "NB." (* not-newline)))
-
-(defvar j-explicit
-  (rx (or "13" "1" "2" "3" "4")
-      (+ " ") ":" (* " ")))
+(setq j-explicit
+      (rx (or "13" "1" "2" "3" "4")
+	  (+ " ") ":" (* " ")))
 
 ; https://code.jsoftware.com/wiki/Vocabulary/Words#Words
 ; note: fixme only one _ allowed!
@@ -118,24 +99,29 @@
 
 (defvar j-font-locks
   `((
-     ;; one day:     
-     ;;     (,(rx "0" (+ " ") ":" (* " ") "0" line-start ")" line-end) . font-lock-string-face)
-     
+     ;; one day: multiline strings and inline explicit defs
      (,(rx "NB." (* not-newline))
       . font-lock-comment-face)
-     ; fixme color =./=: differently 
+     
      (,(rx (or (submatch-n 1 (eval j-identifier))
-	       (seq "'"
-		    (submatch-n 1 (eval j-identifier)
-				(* (seq (+ " ") (eval j-identifier))))
+	       (seq "'" (submatch-n 1 (eval j-identifier)
+				    (* (seq (+ " ") (eval j-identifier))))
 		    "'"))
 	   (* space)
 	   (submatch-n 2 (or "=." "=:")))
       (1 font-lock-variable-name-face)
       (2 j-other-face))
-     (,(rx "'" (* (not "'")) "'")
-      . font-lock-string-face)
      
+     (,(rx "'" (* (not "'")) "'")     . font-lock-string-face)
+     (,(rx (eval `(or ,@j-controls))) . font-lock-keyword-face)
+     (,(rx (eval `(or ,@j-conj-3)))   . j-conjunction-face)
+     (,(rx (eval `(or ,@j-verb-3)))   . j-verb-face)
+     (,(rx (eval `(or ,@j-adv-2)))    . j-adverb-face)
+     (,(rx (eval `(or ,@j-conj-2)))   . j-conjunction-face)
+     (,(rx (eval `(or ,@j-verb-2)))   . j-verb-face)
+     (,(rx (eval `(or ,@j-conj-1)))   . j-conjunction-face)
+     (,(rx (eval `(or ,@j-adv-1)))    . j-adverb-face)
+     (,(rx (eval `(or ,@j-verb-1)))   . j-verb-face)
      ))
   "J Mode font lock keys words")
 
