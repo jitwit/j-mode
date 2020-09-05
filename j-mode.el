@@ -95,7 +95,7 @@
 (define-derived-mode j-mode prog-mode "J"
   "Major mode for writing J"
   :syntax-table j-syntax-table
-  (setq font-lock-multiline t
+  (setq ; one day: font-lock-multiline t
         font-lock-defaults j-font-locks)
   (use-local-map j-mode-keymap))
 
