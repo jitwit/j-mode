@@ -92,34 +92,13 @@
     ["J Symbol Dynamic Look-up" j-help-lookup-symbol-at-point t]
     ["Help on J-mode" describe-mode t]))
 
-;;;###autoload
-(defun j-mode ()
-  "Major mode for editing J"
-  (interactive)
-  (kill-all-local-variables)
-  (use-local-map j-mode-map)
-  (setq mode-name "J"
-        major-mode 'j-mode)
-  (set-syntax-table j-font-lock-syntax-table)
-  (set (make-local-variable 'comment-start)
-       "NB. ")
-  (set (make-local-variable 'comment-start-skip)
-       "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)NB. *")
-  (set (make-local-variable 'font-lock-comment-start-skip)
-       "NB. *")
-  (set (make-local-variable 'font-lock-defaults)
-       '(j-font-lock-keywords
-         nil nil nil nil
-         ;;(font-lock-mark-block-function . mark-defun)
-         (font-lock-syntactic-face-function
-          . j-font-lock-syntactic-face-function)))
-	  ;;   (set (make-local-variable 'prettify-symbols-alist) `(,@j->apl ,@prettify-symbols-alist))
-  (run-mode-hooks 'j-mode-hook))
+(define-derived-mode j-mode prog-mode "J"
+  "Major mode for writing J"
+  :syntax-table j-syntax-table
+  (setq font-lock-multiline t
+        font-lock-defaults j-font-locks)
+  (use-local-map j-mode-keymap))
 
-
-
-
-;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode))
 
 (provide 'j-mode)
