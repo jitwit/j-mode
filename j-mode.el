@@ -68,20 +68,20 @@
   :type 'hook
   :group 'j)
 
-(defvar j-mode-map
+(defvar j-mode-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c !")   'j-console)
     (define-key map (kbd "C-c C-c") 'j-console-execute-buffer)
     (define-key map (kbd "C-c C-r") 'j-console-execute-region)
     (define-key map (kbd "C-c C-l") 'j-console-execute-line)
-    (define-key map (kbd "C-c h")   'j-help-lookup-symbol)
-    (define-key map (kbd "C-c C-h") 'j-help-lookup-symbol-at-point)
-    (define-key map (kbd "M-p")     'pretty-J)
+    (define-key map (kbd "C-c C-j") 'joogle)
+    (define-key map (kbd "M-j")     'j-console-execute-buffer)
+;;    (define-key map (kbd "M-p")     'pretty-J)
     map)
   "Keymap for J major mode")
 
 (defvar j-mode-menu nil "Drop-down menu for j-mode interaction")
-(easy-menu-define j-mode-menu j-mode-map "J Mode menu"
+(easy-menu-define j-mode-menu j-mode-keymap "J Mode menu"
   '("J"
     ["Start J Console" j-console t]
     ["Execute Buffer" j-console-execute-buffer t]

@@ -72,8 +72,8 @@
 (defun j-psa ()
   (interactive)
   (if (null prettify-symbols-alist)
-      (setq prettify-symbols-alist j->apl)
-    (setq prettify-symbols-alist '())))
+      (set prettify-symbols-alist j->apl)
+    (set prettify-symbols-alist '())))
 
 (defun pretty-J ()
   "Load `j->apl' table to set `prettify-symbols-alist' locally
