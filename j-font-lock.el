@@ -80,7 +80,8 @@
 
 (defvar j-is-face
   (defface j-is-face
-    `((t (:foreground "#2F789F")))
+    `((t (:foreground "#004839")))
+    ; "#2F789F"
   "Font Lock mode face used to higlight conjunctions"
   :group 'j-faces))
 

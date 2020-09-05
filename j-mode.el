@@ -68,6 +68,14 @@
   :type 'hook
   :group 'j)
 
+(defvar j->apl
+  '(; ("/\\.~"    . ?⌸)
+    ("=\\."     . ?←)
+    ("=:"       . ?←)
+    ("~"        . ?⍨)
+    ("\*"       . ?×))
+  "Table to translate J to classic APL characters with pretty-symbols")
+
 (defvar j-mode-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c !")   'j-console)
@@ -76,7 +84,7 @@
     (define-key map (kbd "C-c C-l") 'j-console-execute-line)
     (define-key map (kbd "C-c C-j") 'joogle)
     (define-key map (kbd "M-j")     'j-console-execute-buffer)
-;;    (define-key map (kbd "M-p")     'pretty-J)
+    (define-key map (kbd "M-p")     'prettify-symbols-mode)
     map)
   "Keymap for J major mode")
 
@@ -96,7 +104,8 @@
   "Major mode for writing J"
   :syntax-table j-syntax-table
   (setq ; one day: font-lock-multiline t
-        font-lock-defaults j-font-locks)
+        font-lock-defaults j-font-locks
+	prettify-symbols-alist j->apl)
   (use-local-map j-mode-keymap))
 
 (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode))
