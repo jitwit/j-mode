@@ -63,7 +63,7 @@
 (defvar j-adverb-face
   (defface j-adverb-face
     `((t (:foreground "#FF9C55")))
-  "~"
+  "&"
   :group 'j-faces))
 
 (defvar j-conjunction-face
@@ -91,10 +91,57 @@
   "=."
   :group 'j-faces))
 
+(defvar j->apl
+  '(("/\.~"     . ?⌸)
+    ("/:~"      . ?⍋)
+    ("\\:~"     . ?⍒)
+    ("%\."      . ?⌹)
+    ("-:"       . ?≡)
+    ("=\."      . ?←)
+    ("=:"       . ?←)
+    ("_:"       . ?∞)
+    ("<:"       . ?≤)
+    (">:"       . ?≥)
+    ("~:"       . ?≠)
+    ("|:"       . ?⍉)
+    ("\"\."     . ?⍎)
+    ("\":"      . ?⍕)
+    ("^:"       . ?⍣)
+    ("*\."      . ?∧)
+    ("+\."      . ?∨)
+    ("e\."      . ?∊)
+    ("o\."      . ?○)
+    ("E\."      . ?⍷)
+    ("i\."      . ?⍳)
+    ("I\."      . ?⍸)
+    (">\."      . ?⌈)
+    ("<\."      . ?⌊)
+    ("{\."      . ?↑)
+    ("}\."      . ?↓)
+    ("\["       . ?⊣)
+    ("]"        . ?⊢)
+    ("~"        . ?⍨)
+;    ("/\."      . ?⌿)    
+    ("\$"       . ?⍴)
+    ("\*"       . ?×))
+  "Table to translate J to classic APL characters with pretty-symbols")
+
 (defvar j-syntax-table
   (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?\" "."   table)
+    (modify-syntax-entry ?\" "_"   table)
+    ;; helped get x=. blah to fire
     (modify-syntax-entry ?\= "."   table) ; for prettify-symbols mode
+    (modify-syntax-entry ?\& "."   table) ; for prettify-symbols mode
+    (modify-syntax-entry ?\" "."   table) ; for prettify-symbols mode
+    (modify-syntax-entry ?\: "."   table) ; for prettify-symbols mode
+
+    ;; not helping with :~ or ~, to get ~ to fire
+;;     (modify-syntax-entry ?\, "_"   table) ; for prettify-symbols mode
+;;     (modify-syntax-entry ?\# "_"   table) ; for prettify-symbols mode
+;;     (modify-syntax-entry ?\~ "_"   table) ; for prettify-symbols mode
+;;     (modify-syntax-entry ?\) "_"   table) ; for prettify-symbols mode
+;;     (modify-syntax-entry ?\( "_"   table) ; for prettify-symbols mode
+    
     (modify-syntax-entry ?\n ">"   table)
     (modify-syntax-entry ?\r ">"   table)
     table)

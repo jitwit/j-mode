@@ -68,14 +68,6 @@
   :type 'hook
   :group 'j)
 
-(defvar j->apl
-  '(; ("/\\.~"    . ?⌸)
-    ("=\\."     . ?←)
-    ("=:"       . ?←)
-    ("~"        . ?⍨)
-    ("\*"       . ?×))
-  "Table to translate J to classic APL characters with pretty-symbols")
-
 (defvar j-mode-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c !")   'j-console)
@@ -106,6 +98,7 @@
   (setq ; one day: font-lock-multiline t
         font-lock-defaults j-font-locks
 	prettify-symbols-alist j->apl)
+  ;; (pretty-add-keywords nil j->apl)
   (use-local-map j-mode-keymap))
 
 (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode))
