@@ -45,64 +45,56 @@
 
 
 (defgroup j-font-lock nil
-  "font-lock extension for j-mode"
+  "J"
   :group 'j
   :prefix "j-font-lock-")
 
 (defgroup j-faces nil
-  "Faces for j-font-lock"
+  "J"
   :group 'j
   :group 'j-font-lock)
 
 (defvar j-verb-face
   (defface j-verb-face
     `((t (:foreground "#117EFF")))
-  "Font Lock mode face used to higlight vrebs"
+  "I."
   :group 'j-faces))
 
 (defvar j-adverb-face
   (defface j-adverb-face
     `((t (:foreground "#FF9C55")))
-  "Font Lock mode face used to higlight adverbs"
+  "~"
   :group 'j-faces))
 
 (defvar j-conjunction-face
   (defface j-conjunction-face
     `((t (:foreground "#FF0D4D")))
-  "Font Lock mode face used to higlight conjunctions"
+  "^:"
   :group 'j-faces))
 
 (defvar j-noun-face
   (defface j-noun-face
     `((t (:foreground "#BF456E")))
-  "Font Lock mode face used to higlight conjunctions"
+  "a."
   :group 'j-faces))
 
 (defvar j-is-face
   (defface j-is-face
     `((t (:foreground "#004839")))
     ; "#2F789F"
-  "Font Lock mode face used to higlight conjunctions"
+  "avg =. +/ % #"
   :group 'j-faces))
 
 (defvar j-copula-face
   (defface j-copula-face
     `((t (:foreground "#808080")))
-  "Font Lock mode face used to higlight others"
+  "=."
   :group 'j-faces))
 
 (defvar j-syntax-table
   (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?\{ "."   table)
-    (modify-syntax-entry ?\} "."   table)
-    (modify-syntax-entry ?\[ "."   table)
-    (modify-syntax-entry ?\] "."   table)
     (modify-syntax-entry ?\" "."   table)
-    (modify-syntax-entry ?\\ "."   table)
-    (modify-syntax-entry ?\. "."   table)
-    (modify-syntax-entry ?\: "."   table)
-    (modify-syntax-entry ?\( "()"  table)
-    (modify-syntax-entry ?\) ")("  table)
+    (modify-syntax-entry ?\= "."   table) ; for prettify-symbols mode
     (modify-syntax-entry ?\n ">"   table)
     (modify-syntax-entry ?\r ">"   table)
     table)
@@ -151,7 +143,7 @@
 	  (+ " ") ":" (* " ")))
 
 ; https://code.jsoftware.com/wiki/Vocabulary/Words#Words
-; note: fixme only one _ allowed!
+; note: fixme only one consecutive _ allowed!
 (defvar j-identifier
   '(seq alpha (* (or alphanumeric "_"))))
 
