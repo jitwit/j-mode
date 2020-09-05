@@ -10,25 +10,31 @@
 
 (defvar j-verb-face
   (defface j-verb-face
-    `((t (:foreground "Red")))
+    `((t (:foreground "#117EFF")))
   "Font Lock mode face used to higlight vrebs"
   :group 'j-faces))
 
 (defvar j-adverb-face
   (defface j-adverb-face
-    `((t (:foreground "Green")))
+    `((t (:foreground "#FF9C55")))
   "Font Lock mode face used to higlight adverbs"
   :group 'j-faces))
 
 (defvar j-conjunction-face
   (defface j-conjunction-face
-    `((t (:foreground "Blue")))
+    `((t (:foreground "#FF0D4D")))
+  "Font Lock mode face used to higlight conjunctions"
+  :group 'j-faces))
+
+(defvar j-noun-face
+  (defface j-noun-face
+    `((t (:foreground "#FD78E0")))
   "Font Lock mode face used to higlight conjunctions"
   :group 'j-faces))
 
 (defvar j-other-face
   (defface j-other-face
-    `((t (:foreground "Black")))
+    `((t (:foreground "#6C51FF")))
   "Font Lock mode face used to higlight others"
   :group 'j-faces))
 
@@ -58,26 +64,27 @@
     ;; "for_[a-zA-Z]+\\."  "goto_[a-zA-Z]+\\."  "label_[a-zA-Z]+\\."
 
 
-(defvar j-font-lock-len-2-others
-  '("=." "=:" "_." "a." "a:"))
-(defvar j-font-lock-len-1-others
-  '("_" ))
-
  ; todo: negative constants eg _3:
 (defvar j-verb-3
   '("p.." "{::"))
 (defvar j-conj-3
   '("&.:"))
+(defvar j-noun-2
+  '("_." "a." "a:"))
 (defvar j-verb-2
   '("x:" "u:" "s:" "r." "q:" "p:" "p." "o." "L." "j." "I." "i:" "i." "E." "e."
     "C." "A." "?." "\":" "\"." "}:" "}." "{:" "{." "[:" "/:" "\\:" "#:" "#." ";:" ",:"
     ",." "|:" "|." "~:" "~." "$:" "$." "^." "%:" "%." "-:" "-." "*:" "*."  "+:"
     "+." "_:" ">:" ">." "<:" "<."))
 (defvar j-adv-2
-  '("t:" "t." "M." "f." "b." "/."))
+  '(;; sadly, "t:" "t."
+    "M." "f." "b." "/."))
 (defvar j-conj-2
-  '("T." "S:" "L:" "H." "D:" "D." "d." "&:" "&." "@:" "@." "`:" "!:" "!." ";."
+  '(; sadly: "T." "D:" "D." "d."
+    "S:" "L:" "H." 
+    "&:" "&." "@:" "@." "`:" "!:" "!." ";."
     "::" ":." ".:" ".." "^:"))
+
 (defvar j-adv-1
   '("}" "." "\\" "/" "~"))
 (defvar j-verb-1
@@ -116,6 +123,7 @@
      (,(rx (eval `(or ,@j-controls))) . font-lock-keyword-face)
      (,(rx (eval `(or ,@j-conj-3)))   . j-conjunction-face)
      (,(rx (eval `(or ,@j-verb-3)))   . j-verb-face)
+     (,(rx (eval `(or ,@j-noun-2)))   . j-noun-face)
      (,(rx (eval `(or ,@j-adv-2)))    . j-adverb-face)
      (,(rx (eval `(or ,@j-conj-2)))   . j-conjunction-face)
      (,(rx (eval `(or ,@j-verb-2)))   . j-verb-face)
